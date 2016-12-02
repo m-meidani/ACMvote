@@ -1,0 +1,10 @@
+header {
+    background-color: #e85476;
+    height: 50px;
+}
+
+.title {
+    padding-top: 15px;
+    margin-right: 15px;
+    color: white;
+}
