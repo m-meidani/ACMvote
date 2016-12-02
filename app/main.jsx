@@ -12,7 +12,7 @@ import Layout from './components/Layout/Layout';
 // Import pages
 import LoginPage from './components/LoginPage/Login';
 import Vote from './components/Vote/Vote';
-
+import Thanks from './components/Thanks/Thanks';
 
 injectTapEventPlugin();
 
@@ -31,7 +31,7 @@ ReactDOM.render(
       <Route component={Layout}>
         <Route path="/" component={LoginPage}/>
         <Route path="/vote" component={Vote}/>
-        <Route path="/thanks" component={Vote}/>
+        <Route path="/thanks" component={Thanks}/>
       </Route>
     </Router>
   </MuiThemeProvider>, container

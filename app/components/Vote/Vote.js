@@ -25,7 +25,7 @@ class Vote extends React.Component {
         {
           id: 1,
           name: 'بنفش',
-          color: 'rgb(187, 48, 187)',
+          color: 'rgb(98, 28, 105)',
           members: [
             {
               name: 'بهزاد اوسط',
@@ -42,7 +42,7 @@ class Vote extends React.Component {
         {
           id: 2,
           name: 'آبی‌آسمانی',
-          color: '#00bfff',
+          color: 'rgb(0, 191, 255)',
           members: [
             {
               name: 'امیرحسین صیحانی',
