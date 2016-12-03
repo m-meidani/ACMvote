@@ -8,11 +8,15 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Layout from './components/Layout/Layout';
+import axios from 'axios';
+import Auth from './components/Auth/Auth';
+import Config from './components/Config/Config';
 
 // Import pages
 import LoginPage from './components/LoginPage/Login';
 import Vote from './components/Vote/Vote';
 import Thanks from './components/Thanks/Thanks';
+import Privacy from './components/Privacy/Privacy';
 
 injectTapEventPlugin();
 
@@ -24,6 +28,9 @@ const muiTheme = getMuiTheme({
   contentFontFamily: 'Shabnam, sans-serif'
 });
 
+axios.defaults.baseURL = Config.api_uri;
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
@@ -32,6 +39,7 @@ ReactDOM.render(
         <Route path="/" component={LoginPage}/>
         <Route path="/vote" component={Vote}/>
         <Route path="/thanks" component={Thanks}/>
+        <Route path="/privacy" component={Privacy} />
       </Route>
     </Router>
   </MuiThemeProvider>, container

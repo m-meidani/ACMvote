@@ -2,6 +2,7 @@
  * Created by Mehran on 12/2/16.
  */
 import React from 'react';
+import {auth} from '../Auth/Auth';
 
 // Import css classes
 import s from './Header.css';

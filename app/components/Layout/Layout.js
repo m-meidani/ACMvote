@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import Header from '../Header/Header';
+import {RouteTransition} from 'react-router-transition';
 
 // Import CSS Files
 import 'reset-css/reset.css';
@@ -11,12 +12,12 @@ import './Layout.css';
 
 class Layout extends React.Component {
 
-  render () {
+  render() {
     return (
       <div className="app">
         <Header/>
         <div className={'main-container'}>
-          {this.props.children}
+            {this.props.children}
         </div>
       </div>
     )

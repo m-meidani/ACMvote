@@ -8,8 +8,11 @@ import Avatar from 'material-ui/Avatar';
 import Stars from 'material-ui/svg-icons/action/stars';
 import Tup from 'material-ui/svg-icons/action/thumb-up';
 import RaisedButton from 'material-ui/RaisedButton';
-
 import {pinkA200, transparent, white} from 'material-ui/styles/colors';
+import { browserHistory } from 'react-router';
+import axios from 'axios';
+import {auth} from '../../components/Auth/Auth';
+import CircularProgress from 'material-ui/CircularProgress';
 
 // Import css
 
@@ -21,6 +24,7 @@ class Vote extends React.Component {
     super(props);
     this.state = {
       selectedTeam: null,
+      loaded: false,
       teams: [
         {
           id: 1,
@@ -60,6 +64,26 @@ class Vote extends React.Component {
     }
   }
 
+  componentWillMount() {
+    if(auth.isLoggedIn == false){
+      browserHistory.push('/');
+    }
+  }
+
+  componentDidMount() {
+    if(auth.isLoggedIn) {
+      setTimeout(() => {
+        axios.get('/teams/')
+          .then((response) => {
+            this.setState({
+              loaded: true,
+              teams: response.result
+            });
+          });
+      }, 1000);
+    }
+  }
+
   handleTeam = (team) => {
     this.setState({selectedTeam: team});
   };
@@ -71,7 +95,17 @@ class Vote extends React.Component {
         <p style={{marginTop: '20px'}}>
           لطفا تیم مورد نظر خود را انتخاب کنید. توجه کنید که شما فقط یک بار می‌توانید رای دهید.
         </p>
-        {this.state.teams.map((team) => {
+
+        {!this.state.loaded && <CircularProgress size={80}
+                                                 thickness={5}
+                                                 style={{
+                                                   marginRight: 'auto',
+                                                   marginLeft: 'auto',
+                                                   marginTop: '90px',
+                                                   display: 'block'
+                                                 }}
+        />}
+        {this.state.loaded && this.state.teams.map((team) => {
           return (
             <div className="team"
                  style={{

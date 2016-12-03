@@ -3,8 +3,11 @@
  */
 import React from 'react';
 import TextField from 'material-ui/TextField';
+import {Link, browserHistory} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
+import {login, auth} from '../../components/Auth/Auth';
+import Snackbar from 'material-ui/Snackbar';
 
 // Import css styles
 
@@ -14,8 +17,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: false,
-      loggingIn: false
+      loggingIn: false,
+      open: false
     }
   }
 
@@ -27,9 +30,29 @@ class Login extends React.Component {
     this.setState({password: e.target.value});
   };
 
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
   handleLogin = (event) => {
     this.setState({loggingIn: true});
-    localStorage.token = "token";
+    setTimeout( () => {
+      login(
+        this.state.username,
+        this.state.password,
+        (result) => {
+          if (result == 1)
+            browserHistory.push('/vote');
+          else
+            this.setState({
+              open: true,
+              loggingIn: false
+            });
+        }
+      );
+    } , 1000)
   };
 
   render() {
@@ -69,7 +92,15 @@ class Login extends React.Component {
           onTouchTap={this.handleLogin}
           disabled={this.state.loggingIn}
         />
-
+        <Link to={`/privacy`}>{'حفظ حریم شخصی'}</Link>
+        <Snackbar
+          open={this.state.open}
+          style={{backgroundColor: 'red'}}
+          bodyStyle={{backgroundColor: 'red'}}
+          message="نام کاربری یا رمزعبور اشتباه است."
+          autoHideDuration={4000}
+          onRequestClose={this.handleRequestClose}
+        />
       </div>
     )
   }

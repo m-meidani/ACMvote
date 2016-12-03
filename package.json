@@ -16,12 +16,14 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 1"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "babel-runtime": "6.x",
     "file-loader": "^0.9.0",
     "material-ui": "^0.16.4",
     "react": "15.x",
     "react-dom": "15.x",
     "react-router": "^3.0.0",
+    "react-router-transition": "0.0.6",
     "react-tap-event-plugin": "^2.0.1",
     "reset-css": "^2.2.0"
   },
