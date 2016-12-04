@@ -10,7 +10,7 @@ module.exports = {
   ],
   output: {
     path: __dirname + '/build',
-    publicPath: '/',
+    publicPath: '/vote_ui/',
     filename: './bundle.js'
   },
   module: {
@@ -37,7 +37,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: './app/index.html', to: 'index.html' },
-      { from: './app/main.css', to: 'main.css' }
     ]),
   ]
 };

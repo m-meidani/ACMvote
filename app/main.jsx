@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, browserHistory} from 'react-router';
+import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -31,15 +31,16 @@ const muiTheme = getMuiTheme({
 axios.defaults.baseURL = Config.api_uri;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <Router history={browserHistory}>
-      <Route component={Layout}>
-        <Route path="/" component={LoginPage}/>
-        <Route path="/vote" component={Vote}/>
-        <Route path="/thanks" component={Thanks}/>
-        <Route path="/privacy" component={Privacy} />
+      <Route component={Layout} path="/">
+        <Route path="vote_ui">
+          <IndexRoute component={LoginPage}/>
+          <Route path="vote" component={Vote}/>
+          <Route path="thanks" component={Thanks}/>
+          <Route path="privacy" component={Privacy}/>
+        </Route>
       </Route>
     </Router>
   </MuiThemeProvider>, container

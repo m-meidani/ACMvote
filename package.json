@@ -1,6 +1,6 @@
 {
-  "name": "react-babel-webpack-boilerplate",
-  "version": "1.2.4",
+  "name": "ACM-Vote",
+  "version": "1.0.0",
   "description": "",
   "main": "app/main.jsx",
   "scripts": {
@@ -23,7 +23,6 @@
     "react": "15.x",
     "react-dom": "15.x",
     "react-router": "^3.0.0",
-    "react-router-transition": "0.0.6",
     "react-tap-event-plugin": "^2.0.1",
     "reset-css": "^2.2.0"
   },
@@ -57,7 +56,7 @@
     "web app",
     "boilerplate"
   ],
-  "author": "Ruan Yifeng",
+  "author": "Mehran Meidani",
   "license": "MIT",
   "config": {
     "ghooks": {

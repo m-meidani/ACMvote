@@ -13,6 +13,7 @@ import { browserHistory } from 'react-router';
 import axios from 'axios';
 import {auth} from '../../components/Auth/Auth';
 import CircularProgress from 'material-ui/CircularProgress';
+import Config from '../Config/Config';
 
 // Import css
 
@@ -66,7 +67,7 @@ class Vote extends React.Component {
 
   componentWillMount() {
     if(auth.isLoggedIn == false){
-      browserHistory.push('/');
+      browserHistory.push(Config.baseName);
     }
   }
 
@@ -75,14 +76,30 @@ class Vote extends React.Component {
       setTimeout(() => {
         axios.get('/teams/')
           .then((response) => {
+            console.log(response);
             this.setState({
               loaded: true,
-              teams: response.result
+              teams: response.data.results
             });
           });
       }, 1000);
     }
   }
+
+  handleVote = () => {
+    if(auth.isLoggedIn) {
+      axios.post('/vote/', {
+        team: this.state.selectedTeam.name
+      })
+        .then(function (response) {
+          browserHistory.push(Config.baseName + 'thanks');
+
+        })
+        .catch(function (error){
+          console.log(error);
+        })
+    }
+  };
 
   handleTeam = (team) => {
     this.setState({selectedTeam: team});
@@ -92,8 +109,12 @@ class Vote extends React.Component {
     return (
       <div className="VotePage">
         <h2>انتخاب تیم مورد نظر</h2>
-        <p style={{marginTop: '20px'}}>
-          لطفا تیم مورد نظر خود را انتخاب کنید. توجه کنید که شما فقط یک بار می‌توانید رای دهید.
+        {auth.first_name=="Ramtin" && <p style={{fontSize: '2em', marginTop: '10px', color: 'red'}}>
+          {'سلام رامتین!'}
+        </p>}
+
+        <p style={{marginTop: '20px', lineHeight: '2em'}}>
+          {'لطفا ائتلاف مورد نظر خود را انتخاب کنید. توجه کنید که شما فقط یک بار می‌توانید رای دهید. برای انتخاب برروی اسم ائتلاف کلیک کنید.'}
         </p>
 
         {!this.state.loaded && <CircularProgress size={80}
@@ -143,10 +164,11 @@ class Vote extends React.Component {
         <RaisedButton
           label="ثبت کن"
           fullWidth={true}
-          style={{marginTop: '90px'}}
+          style={{marginTop: '90px', marginBottom: '50px'}}
           labelColor={white}
           disabled={!this.state.selectedTeam}
           backgroundColor={this.state.selectedTeam? this.state.selectedTeam.color: white}
+          onTouchTap={this.handleVote}
         />
       </div>
     )

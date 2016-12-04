@@ -8,6 +8,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import LinearProgress from 'material-ui/LinearProgress';
 import {login, auth} from '../../components/Auth/Auth';
 import Snackbar from 'material-ui/Snackbar';
+import Divider from 'material-ui/Divider';
+import Config from '../Config/Config';
 
 // Import css styles
 
@@ -18,7 +20,15 @@ class Login extends React.Component {
     super(props);
     this.state = {
       loggingIn: false,
-      open: false
+      open: false,
+      message: ""
+    }
+
+  }
+
+  _handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.handleLogin();
     }
   }
 
@@ -38,26 +48,30 @@ class Login extends React.Component {
 
   handleLogin = (event) => {
     this.setState({loggingIn: true});
-    setTimeout( () => {
+    setTimeout(() => {
       login(
         this.state.username,
         this.state.password,
         (result) => {
-          if (result == 1)
-            browserHistory.push('/vote');
+          if (result == "Success")
+            browserHistory.push(Config.baseName + 'vote');
           else
             this.setState({
               open: true,
-              loggingIn: false
+              loggingIn: false,
+              message: result
             });
+
         }
       );
-    } , 1000)
+    }, 1000)
   };
 
+
   render() {
+    console.log(this.context.router);
     return (
-      <div className="LoginPage">
+      <div className="LoginPage" onKeyPress={this._handleKeyPress}>
         {this.state.loggingIn &&
         <LinearProgress
           style={{marginTop: '30px'}}
@@ -92,16 +106,29 @@ class Login extends React.Component {
           onTouchTap={this.handleLogin}
           disabled={this.state.loggingIn}
         />
-        <Link to={`/privacy`}>{'حفظ حریم شخصی'}</Link>
+        <RaisedButton
+          backgroundColor="#FFDF00"
+          label={'حفظ حریم شخصی'}
+          labelColor={'white'}
+          style={{marginTop: '30px', marginLeft: '30px'}}
+          onTouchTap={() => {
+            browserHistory.push(Config.baseName + 'privacy');
+          }}
+        />
         <Snackbar
           open={this.state.open}
           style={{backgroundColor: 'red'}}
           bodyStyle={{backgroundColor: 'red'}}
-          message="نام کاربری یا رمزعبور اشتباه است."
+          message={this.state.message}
           autoHideDuration={4000}
           onRequestClose={this.handleRequestClose}
         />
+        <div className="login-desc login-footer">
+          <Divider inset={false} style={{marginTop: '40px'}}/>
+          <p>{'در صورت بروز مشکل به دفتر شاخه دانشجویی ACM مراجعه و یا با ایمیل acm@ut.ac.ir تماس بگیرید.'}</p>
+        </div>
       </div>
+
     )
   }
 }
