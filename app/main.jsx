@@ -35,7 +35,7 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>
     <Router history={browserHistory}>
       <Route component={Layout} path="/">
-        <Route path="vote_ui">
+        <Route path={Config.baseName}>
           <IndexRoute component={LoginPage}/>
           <Route path="vote" component={Vote}/>
           <Route path="thanks" component={Thanks}/>
